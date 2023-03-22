@@ -7,8 +7,13 @@ const SECRET_KEY: string = environment.secretKey;
 @Injectable({
   providedIn: 'root',
 })
+/**
+ * this abstract class has implemented to indicates that what methods are available in our local storage servise
+ * all type of storage services must extend this class to dependency injection perform correctly.
+ */
 export abstract class AbstractStorageService {
   secureStorage = new SecureStorage(localStorage, {
+    // Hashing algorithem
     hash: function hash(key): any {
       key = CryptoJS.SHA256(key, SECRET_KEY);
       return key.toString();
@@ -31,5 +36,6 @@ export abstract class AbstractStorageService {
 
   abstract setStorage(key: string, value: any);
 
+  /** this method clears all storage items. */
   abstract clear(): void;
 }
